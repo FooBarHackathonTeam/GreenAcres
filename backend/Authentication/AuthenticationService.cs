@@ -1,4 +1,5 @@
 ﻿using Authentication.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -13,26 +14,38 @@ namespace Authentication
 {
     public class AuthenticationService
     {
-        private readonly IConfiguration configuration;
-        public AuthenticationService(IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AuthenticationService(IConfiguration configuration, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
-        public string Generate(UserModel user)
+        public async Task<string> Generate(IdentityUser user)
         {
-            var seciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var seciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(seciurityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Name),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
+            foreach (var userRole in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+
             JwtSecurityToken token = new(
-                configuration["Jwt:Issuer"],
-                configuration["Jwt:Audience"],
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
                 claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
@@ -43,12 +56,12 @@ namespace Authentication
 
         public string Generate(List<Claim> authClaims)
         {
-            var seciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var seciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(seciurityKey, SecurityAlgorithms.HmacSha256);
 
             JwtSecurityToken token = new(
-                configuration["Jwt:Issuer"],
-                configuration["Jwt:Audience"],
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
                 authClaims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials

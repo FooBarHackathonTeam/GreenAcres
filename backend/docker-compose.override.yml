@@ -6,9 +6,6 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
       ASPNETCORE_HTTPS_PORT: "8001"
-      #JWT_KEY: 
-      #JWT_ISSUER: https://localhost:443/
-      #JWT_AUDIENCE: https://localhost:443/
     ports:
       - "8000:80"
       - "8001:443"
