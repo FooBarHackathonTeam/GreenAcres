@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace EFDataAccessLibrary.DataAccess
 {
-    public class ManagerContext : DbContext
+    public class ManagerContext
     {
-        public ManagerContext(DbContextOptions options) : base(options) { }
 
     }
 }
