@@ -21,7 +21,7 @@ namespace RestApi.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] UserLogin userLogin)
+        public IActionResult Login([FromBody] LoginModel userLogin)
         {
             var user = _authentication.Authenticate(userLogin);
 

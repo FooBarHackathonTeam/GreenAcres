@@ -41,7 +41,7 @@ namespace Authentication
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public UserModel? Authenticate(UserLogin userLogin) => 
+        public UserModel? Authenticate(LoginModel userLogin) => 
             UserConstants.ExampleUsers.FirstOrDefault(o =>
                     o.Email.ToLower() == userLogin.UserName.ToLower()
             );
