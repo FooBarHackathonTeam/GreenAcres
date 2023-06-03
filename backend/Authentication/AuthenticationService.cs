@@ -41,6 +41,22 @@ namespace Authentication
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public string Generate(List<Claim> authClaims)
+        {
+            var seciurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(seciurityKey, SecurityAlgorithms.HmacSha256);
+
+            JwtSecurityToken token = new(
+                configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
+                authClaims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
         public UserModel? Authenticate(LoginModel userLogin) => 
             UserConstants.ExampleUsers.FirstOrDefault(o =>
                     o.Email.ToLower() == userLogin.UserName.ToLower()
