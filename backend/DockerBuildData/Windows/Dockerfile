@@ -10,16 +10,11 @@ WORKDIR /src
 COPY ["RestApi/RestApi.csproj", "RestApi/"]
 RUN dotnet restore "RestApi/RestApi.csproj"
 COPY . .
-
 WORKDIR "/src/RestApi"
 RUN dotnet build "RestApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "RestApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-WORKDIR /
-COPY "RestApi/.aspnet/https" /app/https
-RUN ls /app/https
 
 FROM base AS final
 WORKDIR /app
