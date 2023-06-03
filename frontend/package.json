@@ -12,6 +12,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.4",
     "@tsconfig/svelte": "^4.0.1",
+    "@types/mapbox-gl": "^2.7.11",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "svelte": "^3.58.0",
@@ -20,5 +21,8 @@
     "tslib": "^2.5.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
+  },
+  "dependencies": {
+    "mapbox-gl": "^2.15.0"
   }
 }
