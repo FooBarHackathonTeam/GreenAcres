@@ -1,13 +1,21 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import { trans } from "../text/translations";
+    import { auth } from "../auth";
 
     const dispatch = createEventDispatcher();
 
     let email = "";
     let password = "";
 
-    function handleSubmit(e: Event) {}
+    async function handleSubmit() {
+        try {
+            const data = await sendPOSTJSON('xd:3003', {email, password});
+            auth.set({tokenStr: data.token, tokenDecoded: {name: data.name, email: data.email}});
+        } catch (error) {
+            console.error(error)
+        }
+    }
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="user-form">

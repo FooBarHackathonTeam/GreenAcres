@@ -10,8 +10,13 @@
     let password = "";
     let confirmPassword = "";
 
-    function handleSubmit(e: Event) {
-        auth.set({tokenStr: 'xd', tokenDecoded: {name: 'Mikson'}})
+    async function handleSubmit() {
+        try {
+            const data = await sendPOSTJSON('xd:3003', {name, email, password});
+            auth.set({tokenStr: data.token, tokenDecoded: {name: data.name, email: data.email}});
+        } catch (error) {
+            console.error(error)
+        }
     }
 </script>
 

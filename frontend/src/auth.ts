@@ -1,7 +1,8 @@
 import { writable } from "svelte/store";
 
 export type JWTToken = {
-    name: string
+    name: string,
+    email: string
 };
 
 type AuthStoreValue = {
