@@ -11,3 +11,9 @@ type AuthStoreValue = {
 };
 
 export const auth = writable<AuthStoreValue | undefined>(undefined);
+auth.subscribe(val => {
+    if (!val) return;
+    localStorage.setItem('token', val.tokenStr);
+    localStorage.setItem('name', val.tokenDecoded.name);
+    localStorage.setItem('email', val.tokenDecoded.email);
+});

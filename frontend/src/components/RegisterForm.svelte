@@ -14,9 +14,9 @@
   async function handleSubmit() {
     try {
       const data = await sendPOSTJSON("https://localhost:8001/api/Register", {
-        userName: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password,
       });
       auth.set({
         tokenStr: data.token,
