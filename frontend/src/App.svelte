@@ -1,4 +1,6 @@
 <script lang="ts">
+    import MainPage from "./components/MainPage.svelte";
+
 </script>
 
-<h1 class="text-center mt-3 font-bold text-3xl">A New Beginning</h1>
+<MainPage />
