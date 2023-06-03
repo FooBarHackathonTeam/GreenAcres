@@ -12,6 +12,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "Authentication\Authentication.csproj", "{264BCDEB-259F-45C1-B1B1-54FBAE64929A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDataAccessLibrary", "EFDataAccessLibrary\EFDataAccessLibrary.csproj", "{96F069D2-FDBA-4A8D-82B8-CC7D96E2AE50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{264BCDEB-259F-45C1-B1B1-54FBAE64929A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{264BCDEB-259F-45C1-B1B1-54FBAE64929A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{264BCDEB-259F-45C1-B1B1-54FBAE64929A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96F069D2-FDBA-4A8D-82B8-CC7D96E2AE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96F069D2-FDBA-4A8D-82B8-CC7D96E2AE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96F069D2-FDBA-4A8D-82B8-CC7D96E2AE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96F069D2-FDBA-4A8D-82B8-CC7D96E2AE50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
