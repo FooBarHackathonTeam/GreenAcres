@@ -1,6 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import { text, trans } from "../text/translations";
+    import { auth } from "../auth";
 
     const dispatch = createEventDispatcher();
 
@@ -9,7 +10,9 @@
     let password = "";
     let confirmPassword = "";
 
-    function handleSubmit(e: Event) {}
+    function handleSubmit(e: Event) {
+        auth.set({tokenStr: 'xd', tokenDecoded: {name: 'Mikson'}})
+    }
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="user-form">
