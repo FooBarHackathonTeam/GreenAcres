@@ -1,24 +1,26 @@
 import { get, writable } from "svelte/store";
 import { mainPageTranslations } from "./mainPageTranslations";
-import { lang } from "./lang";
+import {Lang, lang} from "./lang";
 
-export const trans = writable({
-    mainPage: mainPageTranslations
-});
+const allTrans = {mainPage: mainPageTranslations};
+export const trans = writable(getCurrentTranslations('en'));
 
 type TranslationObject = {
     pl?: string,
     en?: string
 };
 
-export function text(obj: TranslationObject): string {
-    let currentLang = get(lang);
+lang.subscribe(val => {
+    trans.set(getCurrentTranslations(val));
+});
 
-    if (currentLang in obj)
-        return obj[currentLang];
-    else {
-        for (const key in obj) {
-            return obj[key];
+function getCurrentTranslations(currentLang: Lang) {
+    const result = {};
+    for (const key in allTrans) {
+        result[key] = {};
+        for (const innerKey in allTrans[key]) {
+            result[key][innerKey] = allTrans[key][innerKey][currentLang];
         }
     }
+    return result;
 }

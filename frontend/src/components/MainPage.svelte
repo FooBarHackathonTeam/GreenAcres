@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { text, trans } from '../text/translations';
+    import { trans } from '../text/translations';
     import LoginForm from './LoginForm.svelte';
     import RegisterForm from './RegisterForm.svelte';
+    import LanguageSwitch from "./LanguageSwitch.svelte";
 
     let currentForm: 'login' | 'register' = 'register';
 </script>
@@ -12,11 +13,13 @@
             <img src="/logo.svg" alt="logo">
             <h1 class="font-bold text-3xl">GREENAcres</h1>
         </div>
-        <p class="mt-4 text-xl max-w-sm">{text($trans.mainPage.description)}</p>
+        <p class="mt-4 text-xl max-w-sm">{$trans.mainPage.description}</p>
     </div>
     {#if currentForm == 'register' }
         <RegisterForm on:switch={() => currentForm = 'login'}/>
     {:else}
         <LoginForm on:switch={() => currentForm = 'register'}/>
     {/if}
+
 </main>
+<LanguageSwitch />
