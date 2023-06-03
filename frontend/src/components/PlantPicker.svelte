@@ -1,5 +1,6 @@
 <script lang="ts">
     import { plants, type PlantName } from "../types/Plant";
+    import {trans} from "../text/translations";
 
     export let plantType: PlantName | string;
     let displayMenu = false;
@@ -16,7 +17,7 @@
 {#if !displayMenu}
     <button on:click={() => displayMenu = true} class="absolute bottom-3 right-3 rounded shadow flex items-center space-x-2 px-4 py-2 bg-white">
         <img src={currentIcon} alt="current plant">
-        <p>{plantType}</p>
+        <p>{$trans.plantsTrans[plantType]}</p>
     </button>
 {:else}
     <div class="absolute bottom-3 right-3 rounded shadow bg-white overflow-y-auto" style="max-height: 70vh;">
@@ -28,7 +29,7 @@
                 <li>
                     <button on:click={() => selectPlant(name)} class="flex items-center px-4 py-2 space-x-2">
                         <img src={plants[name]} alt={name}>
-                        <p>{name}</p>
+                        <p>{$trans.plantsTrans[name]}</p>
                     </button>
                 </li>
             {/each}

@@ -16,11 +16,11 @@ export const mainPageTranslations = {
         en: "Password"
     },
     confirmPassword: {
-        pl: "Potwierdz Haslo",
+        pl: "Potwierdź Hasło",
         en: "Confirm password"
     },
     registerAction: {
-        pl: "Dolacz do Nas",
+        pl: "Dołacz do Nas",
         en: "Join"
     },
     haveAnAccount: {
@@ -28,7 +28,7 @@ export const mainPageTranslations = {
         en: "Already have an account?"
     },
     switchToLogin: {
-        pl: "Zaloguj Sie Tutaj",
+        pl: "Zaloguj się Tutaj",
         en: "Log in here"
     },
     loginAction: {

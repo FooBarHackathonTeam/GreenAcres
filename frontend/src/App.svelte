@@ -9,4 +9,4 @@
  {:else}
      <MainPage />
  {/if}
-<!--<Map />-->
+<Map />

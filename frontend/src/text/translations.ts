@@ -1,8 +1,9 @@
 import { get, writable } from "svelte/store";
 import { mainPageTranslations } from "./mainPageTranslations";
 import {Lang, lang} from "./lang";
+import {plantsTranslations} from "./plantsTranslations";
 
-const allTrans = {mainPage: mainPageTranslations};
+const allTrans = {mainPage: mainPageTranslations, plantsTrans: plantsTranslations};
 export const trans = writable(getCurrentTranslations('en'));
 
 type TranslationObject = {
