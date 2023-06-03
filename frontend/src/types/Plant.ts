@@ -16,6 +16,7 @@ export const plants = {
     rose: '/plants/rose.svg',
     rye: '/plants/rye.svg',
     wheat: '/plants/wheat.svg',
+    grass: '/plants/grass.svg'
 };
 
 export type PlantName = keyof typeof plants;

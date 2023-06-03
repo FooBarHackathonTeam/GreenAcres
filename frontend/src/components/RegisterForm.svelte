@@ -1,34 +1,52 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
-    import { trans } from "../text/translations";
-    import { auth } from "../auth";
+  import { createEventDispatcher } from "svelte";
+  import { trans } from "../text/translations";
+  import { auth } from "../auth";
+  import { sendPOSTJSON } from "../requests/authRequests";
 
-    const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
-    let name = "";
-    let email = "";
-    let password = "";
-    let confirmPassword = "";
+  let name = "";
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
 
-    function handleSubmit(e: Event) {
-        auth.set({tokenStr: 'xd', tokenDecoded: {name: 'Mikson'}})
+  async function handleSubmit() {
+    try {
+      const data = await sendPOSTJSON("https://localhost:8001/api/Register", {
+        userName: name,
+        email: email,
+        password: password,
+      });
+      auth.set({
+        tokenStr: data.token,
+        tokenDecoded: { name: data.name, email: data.email },
+      });
+    } catch (error) {
+      console.error(error);
     }
+  }
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="user-form">
-    <label for="name">{$trans.mainPage.username}</label>
-    <input type="text" id="name" bind:value={name} required>
-    <label for="email">{$trans.mainPage.email}</label>
-    <input type="email" id="email" bind:value={email} required>
-    <label for="password">{$trans.mainPage.password}</label>
-    <input type="password" id="password" bind:value={password} required>
-    <label for="confirmPassword">{$trans.mainPage.confirmPassword}</label>
-    <input type="confirmPassword" id="confirmPassword" bind:value={confirmPassword} required>
-    <button type="submit">{$trans.mainPage.registerAction}</button>
-    <p class="switch-text">
-        {$trans.mainPage.haveAnAccount}
-        <button on:click={() => dispatch('switch')} class="switch-btn">
-            {$trans.mainPage.switchToLogin}
-        </button>
-    </p>
+  <label for="name">{$trans.mainPage.username}</label>
+  <input type="text" id="name" bind:value={name} required />
+  <label for="email">{$trans.mainPage.email}</label>
+  <input type="email" id="email" bind:value={email} required />
+  <label for="password">{$trans.mainPage.password}</label>
+  <input type="password" id="password" bind:value={password} required />
+  <label for="confirmPassword">{$trans.mainPage.confirmPassword}</label>
+  <input
+    type="confirmPassword"
+    id="confirmPassword"
+    bind:value={confirmPassword}
+    required
+  />
+  <button type="submit">{$trans.mainPage.registerAction}</button>
+  <p class="switch-text">
+    {$trans.mainPage.haveAnAccount}
+    <button on:click={() => dispatch("switch")} class="switch-btn">
+      {$trans.mainPage.switchToLogin}
+    </button>
+  </p>
 </form>

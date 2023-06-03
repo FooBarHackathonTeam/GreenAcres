@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  restapi:
+    image: ${DOCKER_REGISTRY-}restapi
+    build:
+      context: RestApi
+      dockerfile: Dockerfile
+    depends_on: 
+      - mssql
+    networks:
+      backend:
+
+    ports:
+      - "8000:80"
+      - "8001:443"
+
+    environment:
+      - ASPNETCORE_HTTPS_PORT=8001
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=LubiePlacki1234
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev_cert.pfx
+    volumes:
+     - ./conf.d/https/:/https/
+    
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=LubiePlacki1234
+      - MSSQL_PID=Express
+    networks:
+      backend:
+          
+
+networks:
+  backend:
+
