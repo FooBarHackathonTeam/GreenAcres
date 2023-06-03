@@ -1,6 +1,6 @@
 export const mainPageTranslations = {
     description: {
-        pl: "Narzedzie do zarzadzania Twoja zielenia i uprawami."
+        pl: "Wspieramy Was w zarządzaniu ogródkami i uprawami. Skorzystaj z naszej oferty już dziś i ułatw swoje życie."
     },
     username: {
         pl: "Nazwa Uzytkownika"

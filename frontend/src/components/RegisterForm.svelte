@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte/types/runtime/internal/lifecycle";
+    import { createEventDispatcher } from "svelte";
     import { text, trans } from "../text/translations";
 
     const dispatch = createEventDispatcher();
-    
+
     let name = "";
     let email = "";
     let password = "";
@@ -12,7 +12,7 @@
     function handleSubmit(e: Event) {}
 </script>
 
-<form>
+<form on:submit|preventDefault={handleSubmit} class="user-form">
     <label for="name">{text($trans.mainPage.username)}</label>
     <input type="text" id="name" bind:value={name} required>
     <label for="email">{text($trans.mainPage.email)}</label>
@@ -22,10 +22,10 @@
     <label for="confirmPassword">{text($trans.mainPage.confirmPassword)}</label>
     <input type="confirmPassword" id="confirmPassword" bind:value={confirmPassword} required>
     <button type="submit">{text($trans.mainPage.registerAction)}</button>
-    <p>
+    <p class="switch-text">
         {text($trans.mainPage.haveAnAccount)}
-        <button on:click={() => dispatch('switch')}>
-            {$trans.mainPage.switchToLogin}
+        <button on:click={() => dispatch('switch')} class="switch-btn">
+            {text($trans.mainPage.switchToLogin)}
         </button>
     </p>
 </form>

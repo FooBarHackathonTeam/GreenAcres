@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .user-form label {
+        @apply block;
+    }
+
+    .user-form input {
+        @apply block bg-gray-100 rounded mt-3 px-4 py-2 mb-5 shadow;
+    }
+
+    .user-form button[type="submit"] {
+        @apply block bg-green-500 text-white font-semibold px-4 py-2;
+    }
+
+    .switch-text {
+        @apply mt-2;
+    }
+
+    .switch-btn {
+        @apply text-green-500;
+    }
+}
