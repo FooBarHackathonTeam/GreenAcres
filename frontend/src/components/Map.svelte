@@ -2,6 +2,9 @@
     import mapboxgl from "mapbox-gl";
     import { onMount } from "svelte";
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
+    import type { Entry } from "../types/Entry";
+    import type { PlantName } from "../types/Plant";
+    import PlantPicker from "./PlantPicker.svelte";
 
     onMount(() => {
         setupMap();
@@ -21,20 +24,29 @@
                 positionOptions: {
                     enableHighAccuracy: true
                 },
-                // When active the map will receive updates to the device's location as it changes. stalking na poziomie
                 trackUserLocation: true,
-                // Draw an arrow next to the location dot to indicate which direction the device is heading. jak w kazdej nawigacji
                 showUserHeading: true
             })
         );
-
-        const draw = new MapboxDraw();
+        
+        const draw = new MapboxDraw({
+            modes: Object.assign(MapboxDraw.modes)
+        });
         map.addControl(draw, 'top-left');
 
         map.on('draw.create', (e) => {
+            plantEntries = [...plantEntries, {
+                id: e.features[0].id,
+                geoJSON: JSON.stringify(e.features[0]),
+                plantName: currentPlant
+            }];
             alert(JSON.stringify(e.features))
         });
     }
+
+    let currentPlant: PlantName = 'wheat'; 
+    let plantEntries: Entry[] = [];
 </script>
 
 <div id="map-here" class="w-screen h-screen"></div>
+<PlantPicker bind:plantType={currentPlant}/>
