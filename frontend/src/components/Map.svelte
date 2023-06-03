@@ -21,15 +21,19 @@
                 positionOptions: {
                     enableHighAccuracy: true
                 },
-                // When active the map will receive updates to the device's location as it changes.
+                // When active the map will receive updates to the device's location as it changes. stalking na poziomie
                 trackUserLocation: true,
-                // Draw an arrow next to the location dot to indicate which direction the device is heading.
+                // Draw an arrow next to the location dot to indicate which direction the device is heading. jak w kazdej nawigacji
                 showUserHeading: true
             })
         );
 
         const draw = new MapboxDraw();
         map.addControl(draw, 'top-left');
+
+        map.on('draw.create', (e) => {
+            alert(JSON.stringify(e.features))
+        });
     }
 </script>
 
