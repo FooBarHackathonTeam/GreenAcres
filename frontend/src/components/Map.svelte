@@ -1,6 +1,7 @@
 <script lang="ts">
     import mapboxgl from "mapbox-gl";
     import { onMount } from "svelte";
+    import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
     onMount(() => {
         setupMap();
@@ -26,6 +27,9 @@
                 showUserHeading: true
             })
         );
+
+        const draw = new MapboxDraw();
+        map.addControl(draw, 'top-left');
     }
 </script>
 
