@@ -31,7 +31,7 @@ namespace RestApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
-            var user = await _userManager.FindByEmailAsync(loginModel.UserName);
+            var user = await _userManager.FindByEmailAsync(loginModel.Name);
             bool isCorrect = await _userManager.CheckPasswordAsync(user, loginModel.Password);
 
             if (user == null || !isCorrect)
@@ -46,7 +46,7 @@ namespace RestApi.Controllers
             return Ok(new Response
             {
                 Email = user.Email,
-                UserName = user.UserName,
+                Name = user.UserName,
                 Token = token
             });
         }

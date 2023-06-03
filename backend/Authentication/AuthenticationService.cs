@@ -72,7 +72,7 @@ namespace Authentication
 
         public UserModel? Authenticate(LoginModel userLogin) => 
             UserConstants.ExampleUsers.FirstOrDefault(o =>
-                    o.Email.ToLower() == userLogin.UserName.ToLower()
+                    o.Email.ToLower() == userLogin.Name.ToLower()
             );
     }
 }

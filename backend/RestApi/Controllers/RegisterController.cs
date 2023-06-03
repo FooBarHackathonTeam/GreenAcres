@@ -27,7 +27,7 @@ namespace RestApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExist = await _userManager.FindByEmailAsync(model.UserName);
+            var userExist = await _userManager.FindByEmailAsync(model.Name);
 
             if (userExist != null)
             {
@@ -38,20 +38,20 @@ namespace RestApi.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
+                UserName = model.Name
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                return StatusCode(500);
+                return StatusCode(501);
             }
 
             var token = await _authentication.Generate(user);
             return Ok(new Response
             {
                 Email = user.Email,
-                UserName = user.UserName,
+                Name = user.UserName,
                 Token = token
             });
         }

@@ -1,20 +1,8 @@
-import './app.css';
-import App from './App.svelte';
-
-window.onerror = (message, url, line) => {
-    alert(`${message}, ${url}, ${line}`);
-};
-
-window.onmessage = (message) => {
-    alert(message);
-};
-
-window.onmessageerror = (message) => {
-    alert(message);
-}
+import "./app.css";
+import App from "./App.svelte";
 
 const app = new App({
-    target: document.getElementById('app'),
+  target: document.getElementById("app"),
 });
 
 export default app;

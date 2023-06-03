@@ -10,7 +10,7 @@ namespace AuthenticationLibrary.Models
     public class RegisterModel
     {
         [Required(ErrorMessage = "User name is required")]
-        public string? UserName { get; set; }
+        public string? Name { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         public string? Email { get; set; }
