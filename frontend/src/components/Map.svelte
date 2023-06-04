@@ -7,6 +7,7 @@
     import PlantPicker from "./PlantPicker.svelte";
     import MapTypePicker from "./MapTypePicker.svelte";
     import EntrySidepanel from "./EntrySidepanel.svelte";
+    import center from '@turf/center';
 
     onMount(() => {
         setupMap();
@@ -62,6 +63,8 @@
                 entry.marker = new mapboxgl.Marker(mDiv).setLngLat(feature.geometry.coordinates);
                 entry.marker.addTo(map);
             } else {
+                //@ts-ignore
+                entry.marker = new mapboxgl.Marker(mDiv).setLngLat(center(feature).geometry.coordinates);
             }
 
             plantEntries = [...plantEntries, entry];
@@ -76,7 +79,8 @@
             if (entry.type == 'point') {
                 entry.marker.setLngLat(feature.geometry.coordinates);
             } else {
-
+                //@ts-ignore
+                entry.marker.setLngLat(center(feature).geometry.coordinates);
             }
 
             plantEntries = plantEntries.map(x => x.id == entry.id ? entry : x);
@@ -99,12 +103,20 @@
             selectedEntry = plantEntries.find(x => x.id == e.features[0].id);
         });
 
-        let pressing = false;
+        // let pressing = false;
         // map.on('mousedown', () => pressing = true);
         // map.on('touchstart', () => pressing = true);
         // map.on('mouseup', () => pressing = false);
         // map.on('touchend', () => pressing = false);
         // map.on('mousemove', () => {
+        //     if (pressing == false || selectedEntry == undefined) return;
+        //
+        //     if (selectedEntry.type == 'point') {
+        //         //@ts-ignore
+        //         selectedEntry.marker.setLngLat(selectedEntry.geoJson.geometry.coordinates);
+        //     } else {}
+        // });
+        // map.on('touchmove', () => {
         //     if (pressing == false || selectedEntry == undefined) return;
         //
         //     if (selectedEntry.type == 'point') {

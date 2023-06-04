@@ -5,7 +5,7 @@
     export let entry: Entry;
 </script>
 
-<div class="h-screen w-48 bg-white px-4 py-2">
+<div class="h-screen bg-white pl-4 pr-16 py-2">
     <div class="flex items-center space-x-2">
         <img src={plants[entry.plantName]} alt={entry.plantName}>
         <h1 class="text-xl">{entry.plantName}</h1>
