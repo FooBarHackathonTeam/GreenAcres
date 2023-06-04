@@ -139,7 +139,7 @@
         });*/
     }
 
-    let currentPlant: PlantName = 'wheat'; 
+    let currentPlant: PlantName = 'apple'; 
     let plantEntries: Entry[] = [];
     let selectedEntry: Entry | undefined = undefined;
 </script>
