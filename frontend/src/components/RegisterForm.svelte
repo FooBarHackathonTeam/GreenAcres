@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { trans } from "../text/translations";
   import { auth } from "../auth";
-  import { sendPOSTJSON } from "../requests/authRequests";
+  import { sendJson } from "../requests/authRequests";
 
   const dispatch = createEventDispatcher();
 
@@ -13,7 +13,7 @@
 
   async function handleSubmit() {
     try {
-      const data = await sendPOSTJSON("https://localhost:8001/api/Register", {
+      const data = await sendJson("https://localhost:8001/api/Register", 'POST' ,{
         name,
         email,
         password,

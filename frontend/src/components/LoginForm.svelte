@@ -2,7 +2,7 @@
     import { createEventDispatcher } from "svelte";
     import { trans } from "../text/translations";
     import { auth } from "../auth";
-  import { sendPOSTJSON } from "../requests/authRequests";
+    import { sendJson } from "../requests/authRequests";
 
     const dispatch = createEventDispatcher();
 
@@ -11,7 +11,7 @@
 
     async function handleSubmit() {
         try {
-            const data = await sendPOSTJSON('https://localhost:8001/api/Login', {email, password});
+            const data = await sendJson('https://localhost:8001/api/Login', 'POST' ,{email, password});
             auth.set({tokenStr: data.token, tokenDecoded: {name: data.userName, email: data.email}});
         } catch (error) {
             console.error(error)

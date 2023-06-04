@@ -1,6 +1,6 @@
-export async function sendPOSTJSON(url: string, data: Object) {
+export async function sendJson(url: string, method: string, data: Object) {
   const response = await fetch(url, {
-    method: "POST",
+    method,
     body: JSON.stringify(data),
     headers: {
       Accept: "application/json",
