@@ -10,5 +10,6 @@ export type Entry = {
     geoJson: GeoJSON.GeoJSON,
     type: 'area' | 'point',
     marker?: mapboxgl.Marker,
-    tasks: Task[]
+    tasks: Task[],
+    description: string
 };
