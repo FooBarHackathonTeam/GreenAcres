@@ -11,7 +11,7 @@
 
     async function handleSubmit() {
         try {
-            const data = await sendJson('https://localhost:8001/api/Login', 'POST' ,{email, password});
+            const data = await sendJson('https://localhost:8001/api/Login', 'POST' ,{Name: email, password});
             auth.set({tokenStr: data.token, tokenDecoded: {name: data.userName, email: data.email}});
         } catch (error) {
             console.error(error)

@@ -10,12 +10,12 @@
     import center from '@turf/center';
     import UserBar from "./UserBar.svelte";
     import { auth } from "../auth";
-    import { getJsonAuth } from "../requests/authRequests";
+    import { getJsonAuth, sendJsonAuth } from "../requests/authRequests";
 
     onMount(async () => {
         setupMap();
 
-        const elements = await getJsonAuth('https://localhost:8001/api/Element', $auth.tokenStr);
+        const elements = await getJsonAuth(`https://localhost:8001/api/Element/${$auth.tokenDecoded.email}`, $auth.tokenStr);
         plantEntries = elements;
     });
 
@@ -45,14 +45,25 @@
         });
         map.addControl(draw, 'top-left');
 
-        map.on('draw.create', (e) => {
+        map.on('draw.create', async (e) => {
             const type = e.features[0].geometry.type == 'Point' ? 'point' : 'area';
             const feature = e.features[0];
+
+            const data = await sendJsonAuth('https://localhost:8001/api/Element', 'POST', $auth.tokenStr, {
+                "userId": $auth.tokenDecoded.email,
+                "name": "string",
+                "type": type,
+                "geoJson": JSON.stringify(feature),
+                "description": "string",
+                "tasks": []
+            });
             const entry: Entry = {
+                idDB: data.id,
                 id: feature.id,
                 geoJSONStr: JSON.stringify(feature),
                 geoJson: feature,
                 plantName: currentPlant,
+                tasks: [],
                 type
             };
 

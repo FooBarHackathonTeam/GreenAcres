@@ -11,5 +11,5 @@ export type Entry = {
     type: 'area' | 'point',
     marker?: mapboxgl.Marker,
     tasks: Task[],
-    description: string
+    description?: string
 };
