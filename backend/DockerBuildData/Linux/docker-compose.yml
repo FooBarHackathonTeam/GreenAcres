@@ -4,8 +4,8 @@ services:
   restapi:
     image: ${DOCKER_REGISTRY-}restapi
     build:
-      context: RestApi
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: RestApi/Dockerfile
     depends_on: 
       - mssql
     networks:
