@@ -4,12 +4,18 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using EFDataAccessLibrary.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<ManagerDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+});
+
+builder.Services.AddDbContext<AuthenticationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Authentication"));
 });
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
@@ -21,7 +27,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
 })
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddEntityFrameworkStores<AuthenticationDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
@@ -86,10 +92,16 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<ApplicationDbContext>();
-    if (context.Database.GetPendingMigrations().Any())
+    var managerContext = services.GetRequiredService<ManagerDbContext>();
+    if (managerContext.Database.GetPendingMigrations().Any())
     {
-        context.Database.Migrate();
+        managerContext.Database.Migrate();
+    }
+
+    var authenticationContext = services.GetRequiredService<AuthenticationDbContext>();
+    if (authenticationContext.Database.GetPendingMigrations().Any())
+    {
+        authenticationContext.Database.Migrate();
     }
 }
 
