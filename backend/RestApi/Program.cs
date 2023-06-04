@@ -92,7 +92,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    var managerContext = services.GetRequiredService<AuthenticationDbContext>();
+    var managerContext = services.GetRequiredService<ManagerDbContext>();
     if (managerContext.Database.GetPendingMigrations().Any())
     {
         managerContext.Database.Migrate();
