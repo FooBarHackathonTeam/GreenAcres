@@ -149,9 +149,9 @@
     {#if selectedEntry}
         <EntrySidepanel entry={selectedEntry}/>
     {/if}
-    <div id="map-here" class="w-screen h-screen relative">
+    <div id="map-here" class="w-screen h-screen">
         <MapTypePicker bind:map={map}/>
-        <PlantPicker bind:plantType={currentPlant}/>
-        <UserBar />
     </div>
 </div>
+<PlantPicker bind:plantType={currentPlant}/>
+<!-- <UserBar /> -->
