@@ -8,6 +8,7 @@
     import MapTypePicker from "./MapTypePicker.svelte";
     import EntrySidepanel from "./EntrySidepanel.svelte";
     import center from '@turf/center';
+    import UserBar from "./UserBar.svelte";
 
     onMount(() => {
         setupMap();
@@ -148,10 +149,9 @@
     {#if selectedEntry}
         <EntrySidepanel entry={selectedEntry}/>
     {/if}
-    <div id="map-here" class="w-screen h-screen">
+    <div id="map-here" class="w-screen h-screen relative">
         <MapTypePicker bind:map={map}/>
+        <PlantPicker bind:plantType={currentPlant}/>
+        <UserBar />
     </div>
 </div>
-<PlantPicker bind:plantType={currentPlant}/>
-
-
