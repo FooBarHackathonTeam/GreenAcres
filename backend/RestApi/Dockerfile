@@ -17,10 +17,6 @@ RUN dotnet build "RestApi.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "RestApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-WORKDIR /
-COPY "RestApi/.aspnet/https" /app/https
-RUN ls /app/https
-
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

@@ -19,12 +19,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.30.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Authentication\AuthenticationLibrary.csproj" />
+    <ProjectReference Include="..\EFDataAccessLibrary\EFDataAccessLibrary.csproj" />
   </ItemGroup>
 
 </Project>

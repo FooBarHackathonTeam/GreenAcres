@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AuthenticationLibrary
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class AuthenticationDbContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
