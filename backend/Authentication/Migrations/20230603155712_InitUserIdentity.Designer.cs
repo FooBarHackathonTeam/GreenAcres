@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthenticationLibrary.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(AuthenticationDbContext))]
     [Migration("20230603155712_InitUserIdentity")]
     partial class InitUserIdentity
     {
