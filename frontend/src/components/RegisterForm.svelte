@@ -37,7 +37,7 @@
   <input type="password" id="password" bind:value={password} required />
   <label for="confirmPassword">{$trans.mainPage.confirmPassword}</label>
   <input
-    type="confirmPassword"
+    type="password"
     id="confirmPassword"
     bind:value={confirmPassword}
     required
