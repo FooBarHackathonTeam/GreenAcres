@@ -15,8 +15,9 @@
     });
 </script>
 
-{#if $auth}
-  <Map />
-{:else}
-  <MainPage />
-{/if}
+<!-- {#if $auth} -->
+<!--   <Map /> -->
+<!-- {:else} -->
+<!--   <MainPage /> -->
+<!-- {/if} -->
+<Map />

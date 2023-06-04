@@ -1,5 +1,5 @@
 <script lang="ts">
-    import mapboxgl from "mapbox-gl";
+    import mapboxgl, { type MapboxGeoJSONFeature } from "mapbox-gl";
     import { onMount } from "svelte";
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
     import type { Entry } from "../types/Entry";
@@ -7,6 +7,7 @@
     import PlantPicker from "./PlantPicker.svelte";
     import MapTypePicker from "./MapTypePicker.svelte";
     import EntrySidepanel from "./EntrySidepanel.svelte";
+    import turf from '@turf/turf';
 
     onMount(() => {
         setupMap();
@@ -39,12 +40,33 @@
         map.addControl(draw, 'top-left');
 
         map.on('draw.create', (e) => {
-            plantEntries = [...plantEntries, {
-                id: e.features[0].id,
-                geoJSON: JSON.stringify(e.features[0]),
-                plantName: currentPlant
-            }];
+            const type = e.features[0].geometry.type == 'Point' ? 'point' : 'area';
+            const feature = e.features[0];
+            const entry: Entry = {
+                id: feature.id,
+                geoJSONStr: JSON.stringify(feature),
+                geoJson: feature,
+                plantName: currentPlant,
+                type
+            };
+
+            const mDiv = document.createElement('div');
+            mDiv.style.width = '50px';
+            mDiv.style.height = '50px';
+            mDiv.style.backgroundColor = 'red';
+
+            if (type == 'point') {
+                entry.marker = new mapboxgl.Marker(mDiv).setLngLat(feature.geometry.coordinates);
+            } else {
+                //@ts-ignore
+                entry.marker = new mapboxgl.Marker(mDiv).setLngLat(turf.center(feature).geometry.coordinates);
+            }
+            entry.marker.addTo(map);
+
+            plantEntries = [...plantEntries, entry];
         });
+
+
 
         map.on('draw.selectionchange', (e) => {
             if (e.features.length == 0) {
