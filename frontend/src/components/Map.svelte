@@ -3,11 +3,10 @@
     import { onMount } from "svelte";
     import MapboxDraw from '@mapbox/mapbox-gl-draw';
     import type { Entry } from "../types/Entry";
-    import type { PlantName } from "../types/Plant";
+    import { plants, type PlantName } from "../types/Plant";
     import PlantPicker from "./PlantPicker.svelte";
     import MapTypePicker from "./MapTypePicker.svelte";
     import EntrySidepanel from "./EntrySidepanel.svelte";
-    import turf from '@turf/turf';
 
     onMount(() => {
         setupMap();
@@ -51,22 +50,46 @@
             };
 
             const mDiv = document.createElement('div');
-            mDiv.style.width = '50px';
-            mDiv.style.height = '50px';
-            mDiv.style.backgroundColor = 'red';
+            mDiv.style.padding = '10px'
+            mDiv.style.backgroundColor = 'white';
+            mDiv.style.borderRadius = '50%';
+            mDiv.classList.add('shadow');
+            mDiv.innerHTML = `
+                <img src="${plants[entry.plantName]}" alt="icon" />
+            `;
 
             if (type == 'point') {
                 entry.marker = new mapboxgl.Marker(mDiv).setLngLat(feature.geometry.coordinates);
+                entry.marker.addTo(map);
             } else {
-                //@ts-ignore
-                entry.marker = new mapboxgl.Marker(mDiv).setLngLat(turf.center(feature).geometry.coordinates);
             }
-            entry.marker.addTo(map);
 
             plantEntries = [...plantEntries, entry];
         });
 
+        map.on('draw.update', (e) => {
+            const feature = e.features[0];
+            const entry = plantEntries.find(x => x.id == feature.id);
+            entry.geoJson = feature;
+            entry.geoJSONStr = JSON.stringify(feature);
 
+            if (entry.type == 'point') {
+                entry.marker.setLngLat(feature.geometry.coordinates);
+            } else {
+
+            }
+
+            plantEntries = plantEntries.map(x => x.id == entry.id ? entry : x);
+        });
+
+        map.on('draw.delete', (e) => {
+            const feature = e.features[0];
+            const entry = plantEntries.find(x => x.id == feature.id);
+
+            entry.marker.remove();
+
+            plantEntries = plantEntries.filter(x => x.id != entry.id);
+        });
 
         map.on('draw.selectionchange', (e) => {
             if (e.features.length == 0) {
@@ -75,6 +98,20 @@
             }
             selectedEntry = plantEntries.find(x => x.id == e.features[0].id);
         });
+
+        let pressing = false;
+        // map.on('mousedown', () => pressing = true);
+        // map.on('touchstart', () => pressing = true);
+        // map.on('mouseup', () => pressing = false);
+        // map.on('touchend', () => pressing = false);
+        // map.on('mousemove', () => {
+        //     if (pressing == false || selectedEntry == undefined) return;
+        //
+        //     if (selectedEntry.type == 'point') {
+        //         //@ts-ignore
+        //         selectedEntry.marker.setLngLat(selectedEntry.geoJson.geometry.coordinates);
+        //     } else {}
+        // });
 
         // MAPA 3D
         /*map.on('style.load', () => {
@@ -95,14 +132,13 @@
     let selectedEntry: Entry | undefined = undefined;
 </script>
 
-<div id="map-here" class="w-screen h-screen relative">
-    <MapTypePicker bind:map={map}/>
-</div>
 <div class="flex">
     {#if selectedEntry}
         <EntrySidepanel entry={selectedEntry}/>
     {/if}
-    <div id="map-here" class="w-screen h-screen"></div>
+    <div id="map-here" class="w-screen h-screen">
+        <MapTypePicker bind:map={map}/>
+    </div>
 </div>
 <PlantPicker bind:plantType={currentPlant}/>
 
