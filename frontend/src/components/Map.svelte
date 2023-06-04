@@ -9,9 +9,14 @@
     import EntrySidepanel from "./EntrySidepanel.svelte";
     import center from '@turf/center';
     import UserBar from "./UserBar.svelte";
+    import { auth } from "../auth";
+    import { getJsonAuth } from "../requests/authRequests";
 
-    onMount(() => {
+    onMount(async () => {
         setupMap();
+
+        const elements = await getJsonAuth('https://localhost:8001/api/Element', $auth.tokenStr);
+        plantEntries = elements;
     });
 
     let map: mapboxgl.Map;
